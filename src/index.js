@@ -1,12 +1,36 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React, { Component } from 'react';
+import { render } from 'react-dom';
+import Stopwatch from './components/Stopwatch';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+class App extends Component {
+    constructor() {
+        super();
+        this.state = { startTime: 0, startRecordTime: 0 }
+    }
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+    componentDidMount() {
+        this.setState({ startTime: Date.now() });
+    }
+
+    onFinishRecording = startRecordTime => {
+        this.setState({ startRecordTime: startRecordTime });
+    }
+
+    render() {
+        return (
+            <div className="ui container">
+                <br />
+                <center>
+                    <div class="ui compact segment">
+                        <Stopwatch onFinishRecording={this.onFinishRecording} />
+                    </div>
+                </center>
+            </div>
+        )
+    }
+}
+
+render(
+    <App />,
+    document.querySelector('#root')
+);
